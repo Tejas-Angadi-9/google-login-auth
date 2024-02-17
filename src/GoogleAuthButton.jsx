@@ -25,9 +25,9 @@ const GoogleAuthButton = () => {
 
   useEffect(() => {
     // Check localStorage for token on component mount
-    const storedToken = localStorage.getItem("googleAuthToken");
-    if (storedToken) {
-      setToken(storedToken);
+    const token = localStorage.getItem("googleAuthToken");
+    if (token) {
+      setToken(token);
     }
   }, []);
 
