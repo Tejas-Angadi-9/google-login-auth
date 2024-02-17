@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 
 const GoogleAuthButton = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("googleAuthToken"));
 
-  if (token) console.log("Logged in with token: ", token);
-  else console.log("Not logged in!");
+  console.log("Token: ", token);
+  const handleLoginSuccess = (tokenResponse) => {
+    setToken(tokenResponse.access_token);
+    localStorage.setItem("googleAuthToken", tokenResponse.access_token);
+    console.log("Logged in with token: ", tokenResponse);
+  };
 
-  function logoutButtonHandler() {
-    setTimeout(() => {
-      googleLogout();
-      setToken(null);
-      console.log("Logged out!");
-    }, 1000);
-  }
+  const handleLogout = () => {
+    googleLogout();
+    setToken(null);
+    localStorage.removeItem("googleAuthToken");
+    console.log("Logged out!");
+  };
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      setToken(tokenResponse.access_token);
-      console.log(tokenResponse);
-    },
+    onSuccess: handleLoginSuccess,
   });
+
+  useEffect(() => {
+    // Check localStorage for token on component mount
+    const storedToken = localStorage.getItem("googleAuthToken");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   return (
     <div>
       {token ? (
         <h2>
           <p>You have Logged in &#128515;</p>
-          <button onClick={logoutButtonHandler} className="reg">
+          <button onClick={handleLogout} className="reg">
             Log out
           </button>
         </h2>
@@ -45,7 +53,7 @@ const GoogleAuthButton = () => {
               />
             </span>{" "}
           </h2>
-          <button onClick={() => login()} className="log">
+          <button onClick={login} className="log">
             Sign in
           </button>
         </>
