@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
+
+import Dashboard from "../pages/Dashboard";
 
 const GoogleAuthButton = () => {
   const [token, setToken] = useState(localStorage.getItem("googleAuthToken"));
@@ -34,12 +35,15 @@ const GoogleAuthButton = () => {
   return (
     <div>
       {token ? (
-        <h2>
-          <p>You have Logged in &#128515;</p>
-          <button onClick={handleLogout} className="reg">
-            Log out
-          </button>
-        </h2>
+        <>
+          <Dashboard />
+          <h2>
+            {/* <p>You have Logged in &#128515;</p> */}
+            <button onClick={handleLogout} className="reg">
+              Log out
+            </button>
+          </h2>
+        </>
       ) : (
         <>
           <h2>

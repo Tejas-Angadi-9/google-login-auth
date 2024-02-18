@@ -1,4 +1,4 @@
-import GoogleAuthButton from "./GoogleAuthButton";
+import GoogleAuthButton from "./components/GoogleAuthButton";
 
 import "./App.css";
 
