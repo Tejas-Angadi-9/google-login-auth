@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Welcome to TejiFy &#128515;</h1>
-      <h2>Comming Soon... Stay Tuned!</h2>
+      <h2>Coming Soon... Stay Tuned!</h2>
     </div>
   );
 };
